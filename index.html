@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>縦スクロールサイト ひな形</title>
+
+  <style>
+    /* リセット */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+
+    /* 縦スクロール設定 */
+    main {
+      scroll-snap-type: y mandatory;
+      padding-top: 60px;
+    }
+
+    
+
+    .slide{
+      height: calc(100vh - 60px);
+       position: relative;
+      scroll-snap-align: start;
+      overflow: hidden;
+    }
+
+    .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  vertical-align: bottom;
+}
+ .slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+}   
+
+.slide-text {
+   position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: #fff;
+  text-align: center;
+
+  z-index: 2;
+   opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.slide-text.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: #fff;
+  animation: bounce 1.5s infinite;
+  z-index: 3;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+.slide:not(:first-child) .scroll-indicator {
+  display: none;
+}
+
+.arrow {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+}
+
+header { 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;} 
+
+  .logo {
+  font-weight: bold;
+}
+
+/* ===== ハンバーガー ===== */
+.hamburger {
+  width: 30px;
+  height: 22px;
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.hamburger span:nth-child(1) {
+  top: 0;
+}
+.hamburger span:nth-child(2) {
+  top: 10px;
+}
+.hamburger span:nth-child(3) {
+  bottom: 0;
+}
+
+.drawer {
+  position: fixed;
+  top: 60px;
+  right: -100%;
+  width: 100%;
+  height: calc(100vh - 60px);
+   background: rgba(0, 0, 0, 0.6); /* 半透明 */
+  backdrop-filter: blur(4px);     /* 背景ぼかし（対応ブラウザのみ） */
+  transition: 0.4s;
+  z-index: 900;
+}
+
+.drawer ul {
+  list-style: none;
+  padding: 40px 20px;
+}
+
+.drawer li {
+  margin-bottom: 20px;
+}
+
+.drawer a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.drawer.is-open {
+  right: 0;
+}
+  </style> 
+  </head>
+   <body>
+
+<header>
+
+  
+  <div class="logo">縦スクロールサイト</div>
+
+  <button class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+
+<nav class="drawer">
+  <ul>
+    <li><a href="concept.html">CONCEPT</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="works.html">WORKS</a></li>
+    <li><a href="concept.html">CONTACT</a></li>
+  </ul>
+</nav>
+<main>
+
+<section class="slide"> 
+  <img src="img/pixta_62192464_M.avif" alt="">
+  <div class="slide-text">
+    <h2>spring</h2>
+    <p>ここにキャッチコピー</p>
+  </div>
+    <div class="scroll-indicator">
+     <span class="arrow"></span>
+  </div>
+</section>
+ <section class="slide">
+  <img src="img/1085-1-1.jpg" alt="">
+   <div class="slide-text">
+    <h2>summer</h2>
+    <p>ここにキャッチコピー</p>
+  </div>
+</section>
+ <section class="slide">
+  <img src="img/IMG_2808-1200x800.jpg" alt="">
+   <div class="slide-text">
+    <h2>autumn</h2>
+    <p>ここにキャッチコピー</p>
+  </div>
+</section>
+<section class="slide">
+  <img src="img/7f166d8649e1bb80fb3f498213436b4b.jpg" alt="">
+   <div class="slide-text">
+    <h2>winter</h2>
+    <p>ここにキャッチコピー</p>
+  </div>
+
+
+</section>
+  
+</main>
+<script>
+const targets = document.querySelectorAll('.slide-text');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+  entry.target.classList.add('is-active');
+} else {
+  entry.target.classList.remove('is-active');
+}
+  });
+}, {
+  threshold: 0.6
+});
+
+targets.forEach(target => observer.observe(target));
+
+const scrollIndicator = document.querySelector('.scroll-indicator');
+
+const hamburger = document.querySelector('.hamburger');
+const drawer = document.querySelector('.drawer');
+
+hamburger.addEventListener('click', () => {
+  drawer.classList.toggle('is-open');
+});
+</script>
+</body>
+</html>
